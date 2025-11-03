@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}
+
+model applications {
+  id           Int      @id @default(autoincrement())
+  updated_at   DateTime
+  parent_id    Int      @unique
+  provider_id  Int      @unique
+  child_id     Int      @unique
+  status       String
+  message      String
+  submitted_at DateTime
+}
+
+model child_applications {
+  id                     Int      @id @default(autoincrement())
+  first_name             String
+  last_name              String
+  date_of_birth          DateTime
+  gender                 String
+  special_details        String
+  preferred_start_date   DateTime
+  preferred_days         String
+  preferred_hours        Int
+  updated_application_at DateTime
+}
+
+model child_documents {
+  id         Int      @id @default(autoincrement())
+  updated_at DateTime
+  file_url   String
+  file_name  String
+  mime_type  String
+  size_bytes Int
+  child_id   Int
+}
+
+model children {
+  id              Int      @id @default(autoincrement())
+  updated_at      DateTime
+  name            String
+  date_of_birth   DateTime
+  gender          String
+  special_needs   String
+  preferred_start DateTime
+  preferred_days  String
+  preferred_hours String
+  parent_id       Int
+}
+
+model notify_settings {
+  id               Int      @id @default(autoincrement())
+  updated_at       DateTime
+  email_enabled    Boolean
+  sms_enabled      Boolean
+  push_enabled     Boolean
+  frequency        String
+  marketing_opt_in Boolean
+}
+
+model parent_profile {
+  id                       Int    @id @default(autoincrement())
+  first_name               String
+  last_name                String
+  phone_number             String
+  home_address             String
+  postal_code              String
+  place_of_work            String
+  work_address             String
+  preferred_contact        String
+  emergency_contact_name   String
+  emergency_contact_number String
+}
+
+model provider_business_hours {
+  id Int @id @default(autoincrement())
+}
+
+model provider_licenses {
+  id          Int      @id @default(autoincrement())
+  uploaded_at DateTime
+  provider_id Int
+}
+
+model provider_profile {
+  id           Int    @id @default(autoincrement())
+  first_name   String
+  last_name    String
+  phone_number String
+  home_address String
+  postal_code  String
+}
+
+model saved_providers {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  provider_id Int
+  created_at  DateTime
+}
