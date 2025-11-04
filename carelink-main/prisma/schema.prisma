@@ -45,13 +45,14 @@ model child_documents {
   file_name  String
   mime_type  String
   size_bytes Int
-  child_id   Int
+  child_id   Int      @unique
 }
 
 model children {
   id              Int      @id @default(autoincrement())
   updated_at      DateTime
-  name            String
+  first_name      String
+  last_name       String
   date_of_birth   DateTime
   gender          String
   special_needs   String
@@ -86,7 +87,12 @@ model parent_profile {
 }
 
 model provider_business_hours {
-  id Int @id @default(autoincrement())
+  id              Int      @id @default(autoincrement())
+  provider_id     Int
+  day_of_the_week Int
+  is_closed       Boolean
+  open_at         DateTime
+  closes_at       DateTime
 }
 
 model provider_licenses {

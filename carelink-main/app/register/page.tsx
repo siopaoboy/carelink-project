@@ -11,11 +11,6 @@ import { FaFacebook, FaApple } from "react-icons/fa";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [consent, setConsent] = useState(false);
-
   // const initialState = {
   //   formFields: {
   //     email: "",
@@ -29,26 +24,6 @@ export default function RegisterPage() {
   //   initialState
   // );
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email || !password || !confirm) return;
-    if (password !== confirm) {
-      alert("Passwords do not match");
-      return;
-    }
-
-    if (!consent) {
-      alert("Please agree to the Privacy Policy to continue.");
-      return;
-    }
-    try {
-      await createUser(email, password);
-
-      router.push(`/verify-sent?email=${encodeURIComponent(email)}`);
-    } catch (err: any) {
-      alert(err?.message || "Registration failed");
-    }
-  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background">
       <div className="w-full max-w-md p-8 space-y-6 bg-background rounded">
@@ -85,8 +60,8 @@ export default function RegisterPage() {
           <div>
             <label className="block mb-1 font-medium">Confirm Password</label>
             <input
-              id="password"
-              name="password"
+              id="confirm"
+              name="confirm"
               type="password"
               className="w-full px-3 py-2 border rounded"
               required
@@ -96,7 +71,8 @@ export default function RegisterPage() {
           </div>
           <div className="flex items-start gap-2 text-sm">
             <input
-              id="privacy-consent"
+              id="consent"
+              name="consent"
               type="checkbox"
               className="mt-1"
               checked={consent}

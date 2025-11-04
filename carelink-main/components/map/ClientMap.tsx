@@ -3,14 +3,12 @@
 import { useEffect, useMemo, useState } from "react"
 import dynamic from "next/dynamic"
 
-// Dynamically import react-leaflet pieces to avoid SSR
 const MapContainer = dynamic(async () => (await import("react-leaflet")).MapContainer, { ssr: false })
 const TileLayer = dynamic(async () => (await import("react-leaflet")).TileLayer, { ssr: false })
 const CircleMarker = dynamic(async () => (await import("react-leaflet")).CircleMarker, { ssr: false })
 const Popup = dynamic(async () => (await import("react-leaflet")).Popup, { ssr: false })
 
 import "leaflet/dist/leaflet.css"
-// Note: Using CircleMarker so we don't rely on marker image assets
 
 type LatLng = { lat: number; lng: number }
 
